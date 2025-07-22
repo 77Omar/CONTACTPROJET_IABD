@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Contactel</title>
+    <link rel="stylesheet" href="lib/jquery.mobile-1.4.5.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/index.css">
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/jquery.mobile-1.4.5.min.js"></script>
+    <script src="cordova.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+<!-- Page d'accueil -->
+<div id="homepage" data-role="page">
+    <div data-role="header" data-theme="b">
+        <h1>ContactTel</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+        <a href="#formPage" data-role="button" data-icon="plus" data-iconpos="right" data-theme="b" onclick="prepareNewContact()">Ajouter contact</a>
+        <ul id="contactList" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Rechercher un contact...">
+            <!-- Les contacts seront chargés ici -->
+        </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed" data-theme="b">
+        <h4>M1IABD &copy; 2025</h4>
+    </div>
+</div>
+
+<!-- Page de formulaire -->
+<div id="formPage" data-role="page">
+    <div data-role="header" data-theme="b">
+        <a href="#homepage" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>
+        <h1 id="formTitle">Nouveau Contact</h1>
+    </div>
+
+    <div role="main" class="ui-content">
+        <form id="contactForm">
+            <div class="avatar-upload">
+                <img id="avatarPreview" src="img/c1.jpg" class="contact-avatar">
+                <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                <button type="button" id="uploadBtn" class="ui-btn ui-btn-b ui-mini">Choisir une photo</button>
+            </div>
+
+            <div class="ui-field-contain">
+                <label for="firstName">Prénom:</label>
+                <input type="text" name="firstName" id="firstName" required>
+
+                <label for="lastName">Nom:</label>
+                <input type="text" name="lastName" id="lastName" required>
+
+                <label for="phone">Téléphone:</label>
+                <input type="tel" name="phone" id="phone" required>
+
+                <label for="email">Email:</label>
+                <input type="email" name="email" id="email">
+
+                <label for="organization">Organisation:</label>
+                <input type="text" name="organization" id="organization">
+            </div>
+
+            <button type="submit" class="ui-btn ui-btn-b ui-corner-all">Enregistrer</button>
+        </form>
+    </div>
+</div>
+
+<!-- Page de détail -->
+<div id="detailPage" data-role="page">
+    <div data-role="header" data-theme="b">
+        <a href="#homepage" data-role="button" data-icon="arrow-l" data-iconpos="notext"></a>
+        <h1>Détails du Contact</h1>
+        <div class="header-buttons">
+            <a href="#" id="editContact" data-role="button" data-icon="edit" data-iconpos="notext"></a>
+            <a href="#" id="deleteContact" data-role="button" data-icon="delete" data-iconpos="notext"></a>
+        </div>
+    </div>
+
+    <div role="main" class="ui-content">
+        <div class="contact-header">
+            <img id="detailAvatar" src="img/c1.jpg" class="contact-avatar">
+            <h2 id="detailName" class="contact-name"></h2>
+            <p id="detailOrganization" class="contact-org"></p>
+        </div>
+
+        <ul data-role="listview" data-inset="true">
+            <li data-role="list-divider">Informations</li>
+            <li>
+                <a href="tel:" id="detailPhoneLink">
+                    <i class="fa fa-phone"></i>
+                    <span id="detailPhone" class="contact-info"></span>
+                </a>
+            </li>
+            <li>
+                <a href="mailto:" id="detailEmailLink">
+                    <i class="fa fa-envelope"></i>
+                    <span id="detailEmail" class="contact-info"></span>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div data-role="footer" data-position="fixed" data-theme="b">
+        <h4>Alfaruq M1IAB &copy; 2025</h4>
+    </div>
+</div>
+
+<div id="notification" class="notification" style="display: none;"></div>
+</body>
+</html>
