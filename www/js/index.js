@@ -61,7 +61,7 @@ function showContacts(contacts) {
                     (contact.name ? `${contact.name.givenName} ${contact.name.familyName}` : 'Inconnu');
         const phone = contact.phoneNumbers && contact.phoneNumbers[0] ? contact.phoneNumbers[0].value : 'Pas de téléphone';
 
-        let avatarSrc = 'img/c1.jpg';
+        let avatarSrc = 'img/home.png';
         if (contact.photos && contact.photos[0]) {
             if (contact.photos[0].type === 'url') {
                 avatarSrc = contact.photos[0].value;
@@ -73,7 +73,7 @@ function showContacts(contacts) {
         contactsHtml += `
             <li>
                 <a href="#" onclick="showDetailPage(${index})">
-                    <img src="${avatarSrc}" onerror="this.src='img/c1.jpg'">
+                    <img src="${avatarSrc}" onerror="this.src='img/home.png'">
                     <h2>${name}</h2>
                     <p>${phone}</p>
                 </a>
@@ -144,7 +144,7 @@ function saveContact() {
         if (currentAvatarBase64) {
             contact.photos = [new ContactField('base64', currentAvatarBase64, false)];
         } else if (!contact.photos) {
-            contact.photos = [new ContactField('url', 'img/c1.jpg', false)];
+            contact.photos = [new ContactField('url', 'img/home.png', false)];
         }
 
         // Sauvegarde
@@ -181,7 +181,7 @@ function saveContact() {
         if (currentAvatarBase64) {
             contact.photos = [new ContactField('base64', currentAvatarBase64, false)];
         } else {
-            contact.photos = [new ContactField('url', 'img/c1.jpg', false)];
+            contact.photos = [new ContactField('url', 'img/home.png', false)];
         }
 
         // Sauvegarde
@@ -204,7 +204,7 @@ function prepareNewContact() {
 // Réinitialisation du formulaire
 function resetForm() {
     document.getElementById('contactForm').reset();
-    document.getElementById('avatarPreview').src = 'img/c1.jpg';
+    document.getElementById('avatarPreview').src = 'img/home.png';
     currentAvatarBase64 = '';
     document.getElementById('avatarInput').value = '';
 }
@@ -221,8 +221,7 @@ function showDetailPage(index) {
     const email = contact.emails && contact.emails[0] ? contact.emails[0].value : 'Pas d\'email';
     const org = contact.organizations && contact.organizations[0] ? contact.organizations[0].name : 'Pas d\'organisation';
 
-    // Gestion de l'avatar
-    let avatarSrc = 'img/c1.jpg';
+    let avatarSrc = 'img/home.png';
     if (contact.photos && contact.photos[0]) {
         if (contact.photos[0].type === 'url') {
             avatarSrc = contact.photos[0].value;
@@ -238,25 +237,20 @@ function showDetailPage(index) {
     document.getElementById('detailOrganization').textContent = org;
     document.getElementById('detailAvatar').src = avatarSrc;
 
-    // Mise à jour des liens
     document.getElementById('detailPhoneLink').href = `tel:${phone}`;
     document.getElementById('detailEmailLink').href = `mailto:${email}`;
 
-    // Navigation
     $.mobile.changePage('#detailPage');
 }
 
-// Édition d'un contact
 function editContact() {
     if (currentContactId === null) return;
 
     isEditing = true;
     const contact = contacts[currentContactId];
 
-    // Mise à jour du titre
     document.getElementById('formTitle').textContent = 'Modifier Contact';
 
-    // Remplissage du formulaire
     document.getElementById('firstName').value = contact.name ? contact.name.givenName || '' : '';
     document.getElementById('lastName').value = contact.name ? contact.name.familyName || '' : '';
     document.getElementById('phone').value = contact.phoneNumbers && contact.phoneNumbers[0] ? contact.phoneNumbers[0].value || '' : '';
@@ -273,27 +267,25 @@ function editContact() {
             currentAvatarBase64 = contact.photos[0].value;
         }
     } else {
-        document.getElementById('avatarPreview').src = 'img/c1.jpg';
+        document.getElementById('avatarPreview').src = 'img/home.png';
     }
 
-    // Navigation
     $.mobile.changePage('#formPage');
 }
 
-// Suppression d'un contact
+
 function deleteContact() {
     if (currentContactId === null) return;
 
-    if (confirm('Voulez-vous vraiment supprimer ce contact?')) {
+    if (confirm('Voulez-vous vraiment supprimer')) {
         contacts[currentContactId].remove(function() {
-            showNotification('Contact supprimé avec succès!');
+
             loadContacts();
             $.mobile.changePage('#homepage');
         }, onError);
     }
 }
 
-// Affichage des notifications
 function showNotification(message) {
     const notification = document.getElementById('notification');
     notification.textContent = message;
@@ -304,7 +296,6 @@ function showNotification(message) {
     }, 3000);
 }
 
-// Gestion des erreurs
 function onError(error) {
     console.error('Error:', error);
     showNotification('Une erreur est survenue: ' + (error.message || error));
